@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_location_histories",
+  "info": {
+    "singularName": "order-location-history",
+    "pluralName": "order-location-histories",
+    "displayName": "OrderLocationHistory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "timestamp": {
+      "type": "datetime"
+    },
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    }
+  }
+}
