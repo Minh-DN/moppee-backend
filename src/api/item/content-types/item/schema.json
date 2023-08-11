@@ -35,8 +35,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::inventory.inventory",
-      "private": true,
-      "inversedBy": "item"
+      "mappedBy": "details"
     }
   }
 }

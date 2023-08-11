@@ -12,11 +12,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "item": {
+    "details": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::item.item",
-      "mappedBy": "inventory"
+      "inversedBy": "inventory"
     },
     "quantity": {
       "type": "integer"
