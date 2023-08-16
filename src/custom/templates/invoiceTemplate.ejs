@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Invoice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 5mm 15mm;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .order-info {
+      flex: 1;
+      text-align: right;
+    }
+
+    .order-items {
+      margin-top: 20px;
+    }
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+
+    .item-image {
+      height: 60px; 
+    }
+
+    .item-details {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .total {
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .addresses {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .address-container {
+      flex: 1;
+    }
+
+    .address-details {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Invoice</h1>
+  </div>
+
+  <!-- USER DETAILS AND ORDER INFO -->
+  <div class="info">
+    <div class="user-info">
+      <p>
+        <strong>Username:</strong>
+        <%= data.user.username %>
+      </p>
+      <p>
+        <strong>Email:</strong>
+        <%= data.user.email %>
+      </p>
+    </div>
+    <div class="order-info">
+      <p>
+        <strong>Order ID:</strong>
+        <%= data.orderId %>
+      </p>
+      <p>
+        <strong>Status:</strong>
+        <%= data.status %>
+      </p>
+    </div>
+  </div>
+  <hr />
+
+  <!-- ITEM LIST -->
+  <div class="order-items">
+    <h2>Order Items</h2>
+    <% data.orderItems.forEach(item=> { %>
+      <div class="item">
+        <p><b><%= item.name %></b></p>
+        <div class="item-details">
+          <img class="item-image" src="<%= serverBaseUrl %><%= item.imageUrl %>" alt="<%= item.name %>">
+          <div class="item-price">
+            <p>Quantity: <%= item.quantity %></p>
+            <p>Unit Price: $<%= item.unitPrice.toFixed(2) %></p>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+  </div>
+  <hr />
+
+  <!-- TOTAL -->
+  <div class="total">
+    <p><strong>GST (included): $<%= (data.totalPrice / 10).toFixed(2) %></strong></p>
+    <p><strong>Total Price: $<%= data.totalPrice.toFixed(2) %></strong></p>
+  </div>
+  <hr />
+
+  <!-- DELIVERY AND BILLING ADDRESSES -->
+  <div class="addresses">
+    <div class="address-container">
+      <h3>Delivery Address</h3>
+      <div class="address-details">
+        <% if (data.deliveryAddress.unit) { %>
+          <p><strong>Unit:</strong> <%= data.deliveryAddress.unit %></p>
+        <% } %>
+        <p><strong>Street Address:</strong> <%= data.deliveryAddress.streetAddress %></p>
+        <p><strong>Suburb:</strong> <%= data.deliveryAddress.suburb %></p>
+        <% if (data.deliveryAddress.company) { %>
+          <p><strong>Company:</strong> <%= data.deliveryAddress.company %></p>
+        <% } %>
+        <p><strong>State:</strong> <%= data.deliveryAddress.state %></p>
+        <p><strong>Postcode:</strong> <%= data.deliveryAddress.postcode %></p>
+        <p><strong>Country:</strong> <%= data.deliveryAddress.country %></p>
+      </div>
+    </div>
+    <div class="address-container">
+      <h3>Billing Address</h3>
+      <div class="address-details">
+        <% if (data.billingAddress.unit) { %>
+          <p><strong>Unit:</strong> <%= data.billingAddress.unit %></p>
+        <% } %>
+        <p><strong>Street Address:</strong> <%= data.billingAddress.streetAddress %></p>
+        <p><strong>Suburb:</strong> <%= data.billingAddress.suburb %></p>
+        <% if (data.billingAddress.company) { %>
+          <p><strong>Company:</strong> <%= data.billingAddress.company %></p>
+        <% } %>
+        <p><strong>State:</strong> <%= data.billingAddress.state %></p>
+        <p><strong>Country:</strong> <%= data.billingAddress.country %></p>
+        <p><strong>Postcode:</strong> <%= data.billingAddress.postcode %></p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

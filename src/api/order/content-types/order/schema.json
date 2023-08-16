@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "order_items": {
+    "orderItems": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::order-item.order-item",
@@ -27,10 +27,28 @@
         "DELIVERED"
       ]
     },
-    "order_location_histories": {
+    "orderLocationHistories": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::order-location-history.order-location-history"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
+    },
+    "deliveryAddress": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::address.address",
+      "inversedBy": "ordersDelivery"
+    },
+    "billingAddress": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::address.address",
+      "inversedBy": "ordersBilling"
     }
   }
 }

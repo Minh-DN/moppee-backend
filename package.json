@@ -16,6 +16,9 @@
     "@strapi/plugin-users-permissions": "4.12.1",
     "@strapi/strapi": "4.12.1",
     "better-sqlite3": "8.5.0",
+    "ejs": "^3.1.9",
+    "lodash": "^4.17.21",
+    "puppeteer": "^21.0.3",
     "strapi-plugin-transformer": "^3.1.0"
   },
   "author": {

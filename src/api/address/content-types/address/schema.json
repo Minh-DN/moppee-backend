@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Address",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "streetAddress": {
+      "type": "string",
+      "required": true
+    },
+    "suburb": {
+      "type": "string",
+      "required": true
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "Australian Capital Territory",
+        "New South Wales",
+        "Northern Territory",
+        "Queensland",
+        "South Australia",
+        "Tasmania",
+        "Victoria",
+        "Western Australia"
+      ],
+      "required": true
+    },
+    "country": {
+      "type": "string",
+      "default": "Australia",
+      "required": true
+    },
+    "postcode": {
+      "type": "integer",
+      "required": true
+    },
+    "company": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "addresses"
+    },
+    "ordersDelivery": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "deliveryAddress"
+    },
+    "ordersBilling": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "billingAddress"
+    }
+  }
+}
