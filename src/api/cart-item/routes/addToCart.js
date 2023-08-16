@@ -1,7 +1,7 @@
 module.exports = {
   routes: [
     {
-      method: 'PATCH',
+      method: 'POST',
       path: '/cart-item/addToCart',
       handler: 'cart-item.addToCart',
     }
