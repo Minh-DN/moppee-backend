@@ -9,6 +9,28 @@ const item = require('../../item/controllers/item');
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::cart-item.cart-item', ({ strapi }) => ({
+  async getUserShoppingCart(ctx) {
+    const { user } = ctx.state;
+    const shoppingCart = await strapi.entityService.findMany('api::cart-item.cart-item', {
+      filters: {
+        user: {
+          id: {
+            $eq: user.id
+          }
+        }
+      },
+      populate: ['item']
+    });
+    const transformedData = shoppingCart.map(cartItem => {
+      return {
+        itemId: cartItem.item.id,
+        price: cartItem.item.price,
+        quantity: cartItem.quantity,
+        name: cartItem.item.name,
+      }
+    })
+    ctx.send(transformedData)
+  },
   // Add to cart. Handles both adding a new item to cart and adding to item's quantity
   async addToCart(ctx) {
     const { user } = ctx.state;
