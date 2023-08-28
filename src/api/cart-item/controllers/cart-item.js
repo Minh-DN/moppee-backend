@@ -9,28 +9,13 @@ const item = require('../../item/controllers/item');
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::cart-item.cart-item', ({ strapi }) => ({
+  // Get an user's shopping cart
   async getUserShoppingCart(ctx) {
     const { user } = ctx.state;
-    const shoppingCart = await strapi.entityService.findMany('api::cart-item.cart-item', {
-      filters: {
-        user: {
-          id: {
-            $eq: user.id
-          }
-        }
-      },
-      populate: ['item']
-    });
-    const transformedData = shoppingCart.map(cartItem => {
-      return {
-        itemId: cartItem.item.id,
-        price: cartItem.item.price,
-        quantity: cartItem.quantity,
-        name: cartItem.item.name,
-      }
-    })
-    ctx.send(transformedData)
+    const shoppingCart = await strapi.service('api::cart-item.cart-item').getShoppingCartByUserId(user.id)
+    ctx.send(shoppingCart)
   },
+  
   // Add to cart. Handles both adding a new item to cart and adding to item's quantity
   async addToCart(ctx) {
     const { user } = ctx.state;
@@ -72,6 +57,7 @@ module.exports = createCoreController('api::cart-item.cart-item', ({ strapi }) =
       return ctx.badRequest('An error occurred while adding the item to the cart');
     }
   },
+
   // Delete item from cart, not just deducting quantity
   async removeFromCart(ctx) {
     const { user } = ctx.state;
@@ -96,6 +82,7 @@ module.exports = createCoreController('api::cart-item.cart-item', ({ strapi }) =
       return ctx.badRequest('An error occurred while removing the item from the cart');
     }
   },
+
   // Deduct item's quantity
   async deductFromCart(ctx) {
     const { user } = ctx.state;
